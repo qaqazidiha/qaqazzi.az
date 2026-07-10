@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kucha</title>
+    <!-- Müasir Font - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Sosial şəbəkə ikonları üçün FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Ümumi tənzimləmələr və Yeni Font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif; /* Yeni qəşəng font */
+        }
+        
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Yuxarı menyu (Header) */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #141414;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo img {
+            height: 60px;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Əsas hissə */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .profile-pic {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #222;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+            margin-bottom: 40px;
+            transition: all 0.4s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+            border-color: #555;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+        }
+
+        /* Sosial şəbəkə düymələri */
+        .social-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn i {
+            font-size: 1.6rem;
+        }
+
+        .social-btn.instagram:hover {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            border-color: transparent;
+            transform: translateY(-5px);
+        }
+
+        .social-btn.tiktok:hover {
+            background: #ff0050;
+            border-color: #00f2fe;
+            transform: translateY(-5px);
+        }
+
+        .social-btn.discord:hover {
+            background: #5865F2;
+            border-color: transparent;
+            transform: translateY(-5px);
+        }
+
+        .social-btn.kick:hover {
+            background: #53FC18;
+            color: #000;
+            border-color: transparent;
+            transform: translateY(-5px);
+        }
+
+        /* Yoxlama Düyməsi */
+        .live-check-section {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .check-btn {
+            background: #222;
+            color: #fff;
+            border: 2px solid #444;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            letter-spacing: 0.5px;
+        }
+
+        .check-btn:hover {
+            background: #333;
+            border-color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255,255,255,0.1);
+        }
+
+        /* POP-UP (Modal) Dizaynı */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85); /* Arxa fona tündləşdirici effekt */
+            backdrop-filter: blur(5px);
+            display: none; /* İlk başda gizlidir */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            animation: popUpAnim 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popUpAnim {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: #ff4444;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .status-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .platform-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .online {
+            background: rgba(83, 252, 24, 0.15);
+            color: #53FC18;
+            border: 1px solid #53FC18;
+            box-shadow: 0 0 15px rgba(83, 252, 24, 0.3);
+        }
+
+        .offline {
+            background: rgba(255, 0, 80, 0.15);
+            color: #ff0050;
+            border: 1px solid #ff0050;
+        }
+
+        .checking {
+            background: rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            border: 1px solid #555;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            text-align: center;
+            padding: 25px;
+            border-top: 1px solid #222;
+            margin-top: auto;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Telefonlar üçün responsiv */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            nav ul {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Yuxarı menyu -->
+    <header>
+        <div class="logo">
+            <img src="images.png" alt="Kucha">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Ana Səhifə</a></li>
+                <li><a href="#">Kucha Shop</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Orta hissə -->
+    <main>
+        <!-- Əsas şəkil -->
+        <img src="channels4_profile.jpg" alt="Profile" class="profile-pic">
+        
+        <!-- Sosial şəbəkələr -->
+        <div class="social-links">
+            <a href="https://instagram.com" target="_blank" class="social-btn instagram">
+                <i class="fa-brands fa-instagram"></i> Instagram
+            </a>
+            <a href="https://tiktok.com" target="_blank" class="social-btn tiktok">
+                <i class="fa-brands fa-tiktok"></i> TikTok
+            </a>
+            <a href="https://discord.com" target="_blank" class="social-btn discord">
+                <i class="fa-brands fa-discord"></i> Discord
+            </a>
+            <a href="https://kick.com" target="_blank" class="social-btn kick">
+                <i class="fa-brands fa-kickstarter-k"></i> Kick
+            </a> 
+        </div>
+
+        <!-- Canlı Yayım Yoxlama Düyməsi -->
+        <div class="live-check-section">
+            <button class="check-btn" id="checkBtn">Bax gör yayındayıq sümbül?</button>
+        </div>
+    </main>
+
+    <!-- Pop-up (Modal) Ekranı -->
+    <div class="modal-overlay" id="statusModal">
+        <div class="modal-content">
+            <!-- Bağlama düyməsi -->
+            <span class="close-btn" id="closeBtn">&times;</span>
+            
+            <h3 class="modal-title">Yayım Statusu</h3>
+            
+            <div class="status-row">
+                <div class="platform-name">
+                    <i class="fa-brands fa-tiktok" style="color: #ff0050; font-size: 1.4rem;"></i> TikTok
+                </div>
+                <span class="status-badge checking" id="tiktokStatus">Yoxlanılır...</span>
+            </div>
+            
+            <div class="status-row">
+                <div class="platform-name">
+                    <i class="fa-brands fa-kickstarter-k" style="color: #53FC18; font-size: 1.4rem;"></i> Kick
+                </div>
+                <span class="status-badge checking" id="kickStatus">Yoxlanılır...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Kucha. Bütün hüquqlar qorunur.</p>
+    </footer>
+
+    <!-- JavaScript - Pop-up və Yoxlama məntiqi -->
+    <script>
+        const checkBtn = document.getElementById('checkBtn');
+        const statusModal = document.getElementById('statusModal');
+        const closeBtn = document.getElementById('closeBtn');
+        
+        const tiktokStatus = document.getElementById('tiktokStatus');
+        const kickStatus = document.getElementById('kickStatus');
+
+        // Düyməyə basanda Pop-up-ı aç
+        checkBtn.addEventListener('click', function() {
+            statusModal.style.display = 'flex';
+            
+            // İlkin vəziyyəti "Yoxlanılır" olaraq təyin edirik
+            tiktokStatus.className = 'status-badge checking';
+            tiktokStatus.textContent = 'Yoxlanılır...';
+            kickStatus.className = 'status-badge checking';
+            kickStatus.textContent = 'Yoxlanılır...';
+
+            // 1.5 saniyə gecikmə ilə simulyasiya edirik
+            setTimeout(() => {
+                // TikTok statusu təyini (50% ehtimal)
+                const isTiktokOnline = Math.random() > 0.5; 
+                if (isTiktokOnline) {
+                    tiktokStatus.textContent = 'ONLINE';
+                    tiktokStatus.className = 'status-badge online';
+                } else {
+                    tiktokStatus.textContent = 'OFFLINE';
+                    tiktokStatus.className = 'status-badge offline';
+                }
+
+                // Kick statusu təyini (50% ehtimal)
+                const isKickOnline = Math.random() > 0.5; 
+                if (isKickOnline) {
+                    kickStatus.textContent = 'ONLINE';
+                    kickStatus.className = 'status-badge online';
+                } else {
+                    kickStatus.textContent = 'OFFLINE';
+                    kickStatus.className = 'status-badge offline';
+                }
+            }, 1200);
+        });
+
+        // "X" düyməsinə basanda Pop-up-ı bağla
+        closeBtn.addEventListener('click', function() {
+            statusModal.style.display = 'none';
+        });
+
+        // Modalın kənarına basanda da pəncərəni bağlamaq üçün
+        statusModal.addEventListener('click', function(event) {
+            if (event.target === statusModal) {
+                statusModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
