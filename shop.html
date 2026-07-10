@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kucha Shop - Gözləmədə</title>
+    <!-- Müasir Font - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+            text-align: center;
+        }
+
+        /* Əsas hissə (ortalanmış) */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .big-logo {
+            max-width: 450px;
+            width: 90%;
+            margin-bottom: 30px;
+            object-fit: contain;
+            animation: pulseAnim 2.5s infinite alternate ease-in-out;
+        }
+
+        .message-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #dddddd;
+            max-width: 700px;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        /* Ana səhifəyə qayıtmaq üçün düymə */
+        .back-btn {
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: 2px solid #333;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            padding: 25px;
+            border-top: 1px solid #222;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @keyframes pulseAnim {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 20px rgba(255,255,255,0.2)); }
+        }
+
+        @media (max-width: 768px) {
+            .big-logo { max-width: 300px; }
+            .message-text { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <img src="images.png" alt="Kucha Logo" class="big-logo">
+        <h1 class="message-text">Təhmin malların şəklini atsın ki, mən də sayta qoyum.</h1>
+        <!-- Qayıtmaq üçün link -->
+        <a href="index.html" class="back-btn">Ana Səhifəyə Qayıt</a>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Kucha. Bütün hüquqlar qorunur.</p>
+    </footer>
+
+</body>
+</html>
