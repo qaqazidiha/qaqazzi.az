@@ -383,6 +383,34 @@
 
     <!-- JavaScript - Pop-up və Yoxlama məntiqi -->
     <script>
+
+
+        // JavaScript kodunu buna dəyiş
+checkBtn.addEventListener('click', async function() {
+    statusModal.style.display = 'flex';
+    
+    // Statusları sıfırla
+    tiktokStatus.textContent = 'Yoxlanılır...';
+    kickStatus.textContent = 'Yoxlanılır...';
+
+    try {
+        // Məsələn: Kick üçün API sorğusu (bu sadəcə nümunədir)
+        const response = await fetch('https://api.kick.com/api/v1/channels/qaqazzi');
+        const data = await response.json();
+
+        if (data.livestream) {
+            kickStatus.textContent = 'ONLINE';
+            kickStatus.className = 'status-badge online';
+        } else {
+            kickStatus.textContent = 'OFFLINE';
+            kickStatus.className = 'status-badge offline';
+        }
+    } catch (error) {
+        // Əgər API bloklanırsa, fallback olaraq "Offline" göstər
+        kickStatus.textContent = 'OFFLINE';
+        kickStatus.className = 'status-badge offline';
+    }
+});
         const checkBtn = document.getElementById('checkBtn');
         const statusModal = document.getElementById('statusModal');
         const closeBtn = document.getElementById('closeBtn');
